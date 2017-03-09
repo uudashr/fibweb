@@ -1,0 +1,22 @@
+language: go
+
+go:
+  - 1.8
+
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get github.com/alecthomas/gometalinter
+  - gometalinter --install
+
+install:
+  - go get -v
+
+before_script:
+  - go test -v -coverprofile=fibgo.coverprofile
+  - gometalinter --deadline=15s
+
+script:
+  - go install
+
+after_success:
+  - goveralls -coverprofile=fibgo.coverprofile -service=travis-ci
