@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/uudashr/fibweb"
+	"github.com/uudashr/fibweb/httpfib"
 )
 
 var usageMsg = `
@@ -39,7 +40,7 @@ func main() {
 		return
 	}
 
-	fibService := fibweb.NewHTTPFibonacciService(fibgoAddr)
+	fibService := httpfib.NewFibonacciService(fibgoAddr)
 	handler := fibweb.NewHTTPHandler(fibService)
 	log.Println("Listen on port", port, "...")
 	err := http.ListenAndServe(fmt.Sprintf(":%d", port), handler)
