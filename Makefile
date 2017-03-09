@@ -17,6 +17,9 @@ stop-fibgo:
 test:
 	@go test
 
+test-cover:
+	@go test
+
 check:
 	@gometalinter --deadline=15s
 
