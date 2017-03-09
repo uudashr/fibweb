@@ -9,14 +9,14 @@ before_install:
   - gometalinter --install
 
 install:
-  - go get -v
+  - go get -v ./...
 
 before_script:
   - go test -v -coverprofile=fibgo.coverprofile
   - gometalinter --deadline=15s
 
 script:
-  - go install
+  - go install ./...
 
 after_success:
   - goveralls -coverprofile=fibgo.coverprofile -service=travis-ci
