@@ -16,4 +16,5 @@ Ensure we have fibgo service run
 $ make run-fibgo
 $ make run
 $ curl http://localhost:8080/api/fibonacci/numbers?limit=5
+$ make stop-fibgo
 ```
