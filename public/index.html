@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Fibgo Web</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <h1>Fibonacci</h1>
+    Limit <input id="limit" type="text" placeholder="limit" size="6" required min=1/> <button id="go">Go</button>
+    <hr />
+    <div id="result">
+      <!-- result placeholder -->
+    </div>
+
+    <script>
+      $('#go').click(function() {
+        var limit = $('#limit').val();
+        $.getJSON('api/fibonacci/numbers', {
+          limit: limit
+        })
+        .done(function(result) {
+          $('#result').html(result.join(', '));
+        })
+        .fail(function(jqxhr, textStatus, error) {
+          $('#result').html(error);
+        });
+      });
+    </script>
+  </body>
+</html>

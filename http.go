@@ -11,6 +11,7 @@ import (
 // NewHTTPHandler create new http.Handler
 func NewHTTPHandler(fibService FibonacciService) http.Handler {
 	e := echo.New()
+	e.File("/", "public/index.html")
 
 	e.GET("/api/fibonacci/numbers", func(c echo.Context) error {
 		limitParam := c.QueryParam("limit")
