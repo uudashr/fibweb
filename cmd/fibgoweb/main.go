@@ -12,7 +12,7 @@ import (
 
 var usageMsg = `
 Usage: fibweb [options]
-     --fibgo-addr   (required) Fibgo address
+     --fibgo-addr   (required) Fibgo address ex: http://fibgo:8080
  -p, --port         Listen port
  -h, --help         Show this message
 `
