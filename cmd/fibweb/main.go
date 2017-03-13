@@ -12,7 +12,7 @@ import (
 
 var usageMsg = `
 Usage: fibweb [options]
-     --fibgo-addr   (required) Fibgo service address ex: http://fibgo:8080
+     --fibgo-addr   (required) Fibgo service address ex: http://fibgo-server:8080
  -p, --port         Listen port
  -h, --help         Show this message
 `
@@ -28,7 +28,7 @@ func main() {
 
 	flag.IntVar(&port, "port", 8080, "Listen port")
 	flag.IntVar(&port, "p", 8080, "Listen port")
-	flag.StringVar(&fibgoAddr, "fibgo-addr", "", "Fibgo service address ex: http://fibgo:8080")
+	flag.StringVar(&fibgoAddr, "fibgo-addr", "", "Fibgo service address ex: http://fibgo-server:8080")
 	flag.BoolVar(&showHelp, "help", false, "Show this message")
 	flag.BoolVar(&showHelp, "h", false, "Show this message")
 

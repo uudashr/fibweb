@@ -1,18 +1,37 @@
 install:
-	@go install ./...
+	@go install -v ./...
 
 prepare-install:
-	@go get -v
+	@go get -v ./...
 
 run:
-	@fibgoweb --fibgo-addr http://localhost:9090
+	@fibgoweb -fibgo-addr http://localhost:9090
 
-run-fibgo:
-	@docker run -d --name fibgo-server -p 9090:8080 uudashr/fibgo
+docker-net-init:
+	@docker network create fibnet
 
-stop-fibgo:
+docker-net-clean:
+	@docker network rm fibnet
+
+docker-run-fibgo:
+	@docker run -d --name fibgo-server --network fibnet uudashr/fibgo
+
+docker-stop-fibgo:
 	@docker stop fibgo-server
 	@docker rm -v fibgo-server
+
+docker-build:
+	@docker build -t fibweb .
+
+setup-docker-run: docker-net-init docker-run-fibgo
+
+docker-run:
+	@docker run -it --rm --name fibweb -p 8080:8080 --network fibnet -e FIBGO_ADDR=fibgo-server:8080 fibweb
+
+teardown-docker-run: docker-stop-fibgo docker-net-clean
+
+docker-console:
+	@docker run -it --rm --name fibweb -p 8080:8080 --network fibnet -e FIBGO_ADDR=fibgo-server:8080 fibweb /bin/sh
 
 test:
 	@go test

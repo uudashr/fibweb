@@ -10,11 +10,9 @@ $ make install
 ```
 
 ## How to run
-Ensure we have fibgo service run
-
+Using docker compose
 ```shell
-$ make run-fibgo
-$ make run
-$ curl http://localhost:8080/api/fibonacci/numbers?limit=5
-$ make stop-fibgo
+$ docker-compose up -d
 ```
+
+Then open browser http://localhost:8080

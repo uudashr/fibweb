@@ -3,19 +3,17 @@ language: go
 go:
   - 1.8
 
-before_install:
-  - go get github.com/mattn/goveralls
-  - go get github.com/alecthomas/gometalinter
-  - gometalinter --install
-
 install:
   - go get -v ./...
 
 before_script:
-  - go test -v -coverprofile=fibgo.coverprofile
-  - gometalinter --deadline=15s
+  - go get github.com/mattn/goveralls
+  - go get github.com/alecthomas/gometalinter
+  - gometalinter --install
 
 script:
+  - go test -v -coverprofile=fibgo.coverprofile
+  - gometalinter --deadline=15s
   - go install ./...
 
 after_success:
