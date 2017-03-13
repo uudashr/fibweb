@@ -1,7 +1,12 @@
+sudo: required
+
 language: go
 
 go:
   - 1.8
+
+services:
+  - docker
 
 install:
   - go get -v ./...
@@ -15,6 +20,18 @@ script:
   - go test -v -coverprofile=fibgo.coverprofile
   - gometalinter --deadline=15s
   - go install ./...
+  - docker build -t fibweb .
+  - docker run -d --name fibweb -p 127.0.0.1:8080:8080 fibweb
+  - curl --fail http://127.0.0.1:8080 || exit 1
+  - curl --fail http://127.0.0.1:8080/api/fibonacci/numbers || exit 1
 
 after_success:
   - goveralls -coverprofile=fibgo.coverprofile -service=travis-ci
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+      docker tag fibgo uudashr/fibweb;
+      docker push uudashr/fibweb;
+    fi
+
+after_script:
+  - docker stop fibweb && docker rm -v fibweb
