@@ -8,13 +8,13 @@ run:
 	@fibgoweb -fibgo-addr http://localhost:9090
 
 docker-net-init:
-	@docker network create fibnet
+	@docker network create fibnet_back-tier
 
 docker-net-clean:
-	@docker network rm fibnet
+	@docker network rm fibnet_back-tier
 
 docker-run-fibgo:
-	@docker run -d --name fibgo-server --network fibnet uudashr/fibgo
+	@docker run -d --name fibgo-server --network fibnet_back-tier uudashr/fibgo
 
 docker-stop-fibgo:
 	@docker stop fibgo-server
@@ -28,10 +28,10 @@ setup-docker-run: docker-net-init docker-run-fibgo
 teardown-docker-run: docker-stop-fibgo docker-net-clean
 
 docker-run:
-	@docker run -it --rm -p 8080:8080 --network fibnet -e FIBGO_ADDR=fibgo-server:8080 fibweb
+	@docker run -it --rm -p 8080:8080 --network fibnet_back-tier -e FIBGO_ADDR=fibgo-server:8080 fibweb
 
 docker-console:
-	@docker run -it --rm -p 8080:8080 --network fibnet -e FIBGO_ADDR=fibgo-server:8080 fibweb /bin/sh
+	@docker run -it --rm -p 8080:8080 --network fibnet_back-tier -e FIBGO_ADDR=fibgo-server:8080 fibweb /bin/sh
 
 test:
 	@go test
