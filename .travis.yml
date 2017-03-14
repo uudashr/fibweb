@@ -31,7 +31,7 @@ after_success:
   - goveralls -coverprofile=fibgo.coverprofile -service=travis-ci
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-      docker tag fibgo uudashr/fibweb;
+      docker tag fibweb uudashr/fibweb;
       docker push uudashr/fibweb;
     fi
 
