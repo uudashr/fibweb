@@ -15,13 +15,15 @@ before_script:
   - go get github.com/mattn/goveralls
   - go get github.com/alecthomas/gometalinter
   - gometalinter --install
+  - docker network create fibnet
+  - docker run -d --name fibgo --network fibnet uudashr/fibgo
 
 script:
   - go test -v -coverprofile=fibgo.coverprofile
   - gometalinter --deadline=15s
   - go install ./...
   - docker build -t fibweb .
-  - docker run -d --name fibweb -p 127.0.0.1:8080:8080 fibweb
+  - docker run -d --name fibweb -p 127.0.0.1:8080:8080 --network fibnet fibweb
   - curl --fail http://127.0.0.1:8080 || exit 1
   - curl --fail http://127.0.0.1:8080/api/fibonacci/numbers || exit 1
 
@@ -35,3 +37,5 @@ after_success:
 
 after_script:
   - docker stop fibweb && docker rm -v fibweb
+  - docker stop fibgo && docker rm -v fibgo
+  - docker network rm fibnet
