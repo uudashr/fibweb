@@ -9,11 +9,12 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - fibnet
+      - back-tier
   fibgo:
     image: uudashr/fibgo
     networks:
-      - fibnet
+      - back-tier
 
 networks:
-  fibnet:
+  back-tier:
+    driver: bridge
