@@ -23,7 +23,7 @@ script:
   - gometalinter --deadline=15s
   - go install ./...
   - docker build -t fibweb .
-  - docker run -d --name fibweb -p 127.0.0.1:8080:8080 --network fibnet fibweb
+  - docker run -d --name fibweb -p 127.0.0.1:8080:8080 -e FIBGO_ADDR=127.0.0.1:8080 --network fibnet fibweb
   - curl --fail http://127.0.0.1:8080 || exit 1
   - curl --fail http://127.0.0.1:8080/api/fibonacci/numbers || exit 1
 
