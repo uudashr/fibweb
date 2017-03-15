@@ -12,7 +12,6 @@ install:
   - go get -v ./...
 
 before_script:
-  - go get github.com/modocache/gover
   - go get github.com/mattn/goveralls
   - go get github.com/alecthomas/gometalinter
   - gometalinter --install
@@ -20,8 +19,7 @@ before_script:
   - docker run -d --name fibgo --network fibnet uudashr/fibgo
 
 script:
-  - go test ./...
-  - gover
+  - go test -v -coverprofile=fibweb.coverprofile
   - gometalinter --deadline=15s
   - go install ./...
   - docker build -t fibweb .
@@ -30,7 +28,7 @@ script:
   - curl --fail http://127.0.0.1:8080/api/fibonacci/numbers || exit 1
 
 after_success:
-  - goveralls -coverprofile=gover.coverprofile -service=travis-ci
+  - goveralls -coverprofile=fibweb.coverprofile -service=travis-ci
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
       docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
       docker tag fibweb uudashr/fibweb;
