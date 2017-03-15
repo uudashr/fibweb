@@ -34,10 +34,10 @@ docker-console:
 	@docker run -it --rm -p 8080:8080 --network fibnet_back-tier -e FIBGO_ADDR=fibgo-server:8080 fibweb /bin/sh
 
 test:
-	@go test
+	@go test ./...
 
 test-cover:
-	@go test
+	@go test -cover ./...
 
 check:
 	@gometalinter --deadline=15s
