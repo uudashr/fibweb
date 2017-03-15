@@ -19,7 +19,7 @@ before_script:
   - docker run -d --name fibgo --network fibnet uudashr/fibgo
 
 script:
-  - go test -v -coverprofile=fibweb.coverprofile
+  - go test -v -coverprofile=fibweb.coverprofile ./...
   - gometalinter --deadline=15s
   - go install ./...
   - docker build -t fibweb .
