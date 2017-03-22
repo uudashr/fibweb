@@ -19,8 +19,7 @@ func TestSeq_limitAdded(t *testing.T) {
 
 		limitI, err := strconv.Atoi(limitS)
 		if err != nil {
-			t.Error("err:", err)
-			t.SkipNow()
+			t.Fatal("err:", err)
 		}
 
 		if got, want := limitI, limit; got != want {
@@ -44,19 +43,16 @@ func TestSeq_decodedResult(t *testing.T) {
 	svc := httpfib.NewFibonacciService(ts.URL)
 	out, err := svc.Seq(10)
 	if err != nil {
-		t.Error("err:", err)
-		t.SkipNow()
+		t.Fatal("err:", err)
 	}
 
 	if got, want := len(out), len(result); got != want {
-		t.Error("got:", got, "want:", want)
-		t.SkipNow()
+		t.Fatal("got:", got, "want:", want)
 	}
 
 	for i, count := 0, len(out); i < count; i++ {
 		if got, want := out[i], result[i]; got != want {
-			t.Error("out[i]:", got, "result[i]:", want, "i:", i)
-			t.SkipNow()
+			t.Fatal("out[i]:", got, "result[i]:", want, "i:", i)
 		}
 	}
 }

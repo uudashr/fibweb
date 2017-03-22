@@ -23,8 +23,7 @@ func TestNumbers_validLimit(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodGet, "/api/fibonacci/numbers", nil)
 	if err != nil {
-		t.Error("err:", err)
-		t.SkipNow()
+		t.Fatal("err:", err)
 	}
 
 	q := req.URL.Query()
@@ -35,25 +34,22 @@ func TestNumbers_validLimit(t *testing.T) {
 	handler.ServeHTTP(rec, req)
 
 	if got, want := rec.Code, http.StatusOK; got != want {
-		t.Error("got:", got, "want:", want)
-		t.SkipNow()
+		t.Fatal("got:", got, "want:", want)
 	}
 
 	var result []int
 	err = json.NewDecoder(rec.Body).Decode(&result)
 	if err != nil {
-		t.Error("err:", err)
-		t.SkipNow()
+		t.Fatal("err:", err)
 	}
 
 	if got, want := len(out), len(result); got != want {
-		t.Error("len(got):", got, "len(want):", want)
-		t.SkipNow()
+		t.Fatal("len(got):", got, "len(want):", want)
 	}
 
 	for i, count := 0, len(result); i < count; i++ {
 		if got, want := result[i], out[i]; got != want {
-			t.Error("result[i]:", got, "out[i]:", want, "i:", i)
+			t.Fatal("result[i]:", got, "out[i]:", want, "i:", i)
 		}
 	}
 }
@@ -68,33 +64,29 @@ func TestNumbers_noLimit(t *testing.T) {
 
 	req, err := http.NewRequest(http.MethodGet, "/api/fibonacci/numbers", nil)
 	if err != nil {
-		t.Error("err:", err)
-		t.SkipNow()
+		t.Fatal("err:", err)
 	}
 
 	rec := httptest.NewRecorder()
 	handler.ServeHTTP(rec, req)
 
 	if got, want := rec.Code, http.StatusOK; got != want {
-		t.Error("got:", got, "want:", want)
-		t.SkipNow()
+		t.Fatal("got:", got, "want:", want)
 	}
 
 	var result []int
 	err = json.NewDecoder(rec.Body).Decode(&result)
 	if err != nil {
-		t.Error("err:", err)
-		t.SkipNow()
+		t.Fatal("err:", err)
 	}
 
 	if got, want := len(out), len(result); got != want {
-		t.Error("len(got):", got, "len(want):", want)
-		t.SkipNow()
+		t.Fatal("len(got):", got, "len(want):", want)
 	}
 
 	for i, count := 0, len(result); i < count; i++ {
 		if got, want := result[i], out[i]; got != want {
-			t.Error("result[i]:", got, "out[i]:", want, "i:", i)
+			t.Fatal("result[i]:", got, "out[i]:", want, "i:", i)
 		}
 	}
 
