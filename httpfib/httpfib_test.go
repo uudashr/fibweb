@@ -29,14 +29,15 @@ func TestSeq_limitAdded(t *testing.T) {
 	defer ts.Close()
 
 	svc := httpfib.NewFibonacciService(ts.URL)
-	svc.Seq(10)
+	svc.Seq(10) // nolint: errcheck
 }
 
 func TestSeq_decodedResult(t *testing.T) {
 	result := []int{1, 2, 3}
 
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(result)
+		err := json.NewEncoder(w).Encode(result)
+		t.Error(err)
 	}))
 	defer ts.Close()
 
