@@ -9,7 +9,7 @@ services:
   - docker
 
 install:
-  - go get -v ./...
+  - go get -v -d ./...
 
 before_script:
   - go get github.com/mattn/goveralls
