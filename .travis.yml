@@ -19,8 +19,8 @@ before_script:
   - docker run -d --name fibgo --network fibnet uudashr/fibgo
 
 script:
-  - go test -v -coverprofile=fibweb.coverprofile
-  - gometalinter --deadline=15s
+  - go test -v -coverprofile=fibweb.coverprofile ./...
+  - gometalinter ./...
   - go install ./...
   - docker build -t fibweb .
   - docker run -d --name fibweb -p 127.0.0.1:8080:8080 -e FIBGO_ADDR=fibgo:8080 --network fibnet fibweb

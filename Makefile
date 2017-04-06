@@ -40,7 +40,7 @@ test-cover:
 	@go test -cover ./...
 
 check:
-	@gometalinter --deadline=15s
+	@gometalinter ./...
 
 prepare-check:
 	@go get -u github.com/alecthomas/gometalinter
